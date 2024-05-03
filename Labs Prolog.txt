@@ -1,0 +1,607 @@
+------------------------Aula 3------------------------
+EX 1.
+homem(ivo).
+homem(gil).
+homem(rai).
+homem(ary).
+homem(noe).
+mulher(ana).
+mulher(bia).
+mulher(eva).
+mulher(clo).
+mulher(lia).
+mulher(gal).
+pai(ivo,eva).
+pai(gil,rai).
+pai(gil,clo).
+pai(gil,ary).
+pai(rai,noe).
+pai(ary,gal).
+mae(ana,eva).
+mae(bia,rai).
+mae(bia,clo).
+mae(bia,ary).
+mae(lia,gal).
+irmao(X,Y) :- homem(X),pai(Z,X),pai(Z,Y).
+irma(X,Y) :- mulher(X),pai(Z,X),pai(Z,Y).
+tio(X,Y) :- homem(X),pai(Z,Y),irmao(X,Z).
+tia(X,Y) :- mulher(X),pai(Z,Y),irmao(X,Z).
+avo_masc(X,Y) :- homem(X),pai(X,_),(pai(_,Y);mae(_,Y)).
+avo_fem(X,Y) :- mulher(X),mae(X,_),(pai(_,Y);mae(_,Y)). 
+
+
+EX 2.
+estuda(fabricio, programacao).
+estuda(joana, lóogica).
+estuda(ana, tcc).
+estuda(josé, banco).
+estuda(lucas, estrutura).
+estuda(nicolas, logica).
+estuda(fernanda, tcc).
+estuda(maria, tcc).
+aluno(fabricio, ufmg).
+aluno(joana, ufu).
+aluno(ana, ufu).
+aluno(jose, ufu).
+aluno(lucas, ufmg).
+aluno(nicolas, ufu).
+aluno(fernanda, ufu).
+aluno(maria, ufu).
+professor(joao, programacao).
+professor(clara, logica).
+professor(roberta, tcc).
+professor(antonio, banco).
+professor(leandro, estrutura).
+reitor(beatriz, ufmg).
+reitor(marcos, ufu).
+oferta(bcc, programacao).
+oferta(bcc, logica).
+oferta(si, tcc).
+oferta(si, banco).
+oferta(bcc, estrutura).
+alunos_professor(X,Y):- professor(Y,Z), estuda(X,Z).
+alunos_bcc(X):- estuda(X,Y), oferta(bcc,Y).
+alunos_si(X):- estuda(X,Y), oferta(si,Y).
+alunos_universidade(X,Y):- aluno(X,Y).
+disciplina_professor(X,Y):- professor(X,Y).
+professor_universidade(X,Y):- professor(X,Z), estuda(L,Z), aluno(L,Y).
+disciplina_universidade(X,Y):- oferta(_,X),  estuda(Z,X), aluno(Z,Y).
+reitor_professor(X,Y):- reitor(X,_), aluno(Z,_), estuda(Z,W), professor(Y,W).
+
+
+Ex 3.
+nota(joao, 5.0).
+nota(jose, 6.0).
+nota(joana, 8.0).
+nota(luiz, 9.0).
+nota(antonio, 8.5).
+nota(felipe,6.5).
+nota(maria,4.5).
+nota(sandra,4.0).
+nota(marcia,10.0).
+nota(suely, 2.0).
+nota(jessica, 4.9).
+aprovado(X):- nota(X,Y), Y>7.
+recuperacao(X):- nota(X,Y), (Y>5, Y<7).
+reprovado(X):- nota(X,Y), Y<5.
+
+
+Ex 4.
+livro('Iracema', 1865, 'Jose de Alencar').
+livro('Memórias Póstumas de Brás Cubas', 1881, 'Machado de Assis').
+livro('O Cortiço ', 1890, 'Aluísio Azevedo').
+livro('Os Sertões ', 1902, 'Euclides da Cunha').
+livro('Triste Fim de Policarpo Quaresma ', 1915, 'Lima Barreto').
+livro('Macunaíma ', 1928, 'Mário de Andrade').
+livro('O Quinze ', 1930, 'Rachel de Queiroz').
+livro('Vidas Secas ', 1938, 'Graciliano Ramos').
+livro('Vestido de Noiva ', 1943,'Nelson Rodrigues').
+livro('Grande Sertão: Veredas ', 1956, 'Guimarães Rosa').
+livro('A Paixão Segundo G.H. ', 1964, 'Clarice Lispector').
+livro('Morte e Vida Severina ', 1967, 'João Cabral de Melo Neto').
+livro('Antes do Baile Verde ', 1970, 'Lygia Fagundes Telles').
+livro('Incidente em Antares ', 1971, 'Érico Veríssimo').
+livro('Tereza Batista Cansada de Guerra ', 1972, 'Jorge Amado').
+livro('Feliz Ano Novo ', 1976, 'Rubem Fonseca').
+livro('Lavoura Arcaica ', 1975, 'Raduan Nassar').
+livro('Poema Sujo ', 1976, 'Ferreira Gulla').
+livro('Nova Antologia Poética ', 1981, 'Mário Quintana').
+livro('Viva o Povo Brasileiro ', 1984, 'João Ubaldo Ribeiro').
+
+autor(X):- livro(Y,_,X),write(Y).
+ano(X):- livro(_,X,_).
+escritos_XeY(X,Y):- livro(Z,X,_),livro(W,Y,_),write(Z),write(W).
+antes(X):- livro(Z,Y,_),X>Y,write(Z).
+lancamento(X):- livro(X,Y,_),write(Y).
+
+
+Ex 5.
+filme('suspense','Amnesia','Nolan',2000,113).
+filme('suspense','Rebecca','Hitchcock',1940,130).
+filme('suspense','Tubarao','Spielberg',1975,124).
+filme('drama','Babel','Inarritu',2006,142).
+filme('drama','Capote','Miler',2005,98).
+filme('drama','Volver','Almodovar',2006,121).
+filme('romance','Casablanca','Curtiz',1942,102).
+filme('romance','Titanic','Cameron',1997,194).
+filme('ficcao','Matrix','Wachowsk',1999,136).
+filme('ficcao','Sinais','Shymalan',2002,106).
+filme('aventura','Shrek','Adamson',2001,90).
+filme('aventura','Superman','Donner',1978,143).
+filme('acao','Spartacus','Kurbik',1960,184).
+
+dirige_filme(Diretor,Filme):- filme(_,Filme,Diretor,_,_).
+genero_suspense(Filme,'suspense'):- filme('suspense',Filme,_,_,_).
+dirigidos_por(Diretor,Filme):- filme(_,Filme,Diretor,_,_).
+ano_que_foi_lancado(Filme,Ano):- filme(_,Filme,_,Ano,_).
+film_duracao(Filme,Duracao):- filme(_,Filme,_,_,X),Duracao>X.
+lancado_entre(Filme,AnoA,AnoB):- filme(_,Filme,_,Ano,_),Ano>=AnoA,Ano=<AnoB.
+classico(Filme):- filme(_,Filme,_,X,_),X=<1980.
+genero(Filme,Genero):- filme(Genero,Filme,_,_,_).
+classicos_de_suspense(Filme):- classico(Filme),(genero(Filme,'suspense')).
+
+
+Ex 6.
+time(palmeiras,13,1914).
+time(corinthians,3,1910).
+time(santos,1,1912).
+time(flamengo,11,1911).
+time(fluminense,4,1902).
+time(vasco,0,1916).
+time(gremio,7,1903).
+time(internacional,2,1912).
+time(atl_mineiro,7,1908).
+time(cruzeiro,5,1921).
+
+fundacao(X,Y) :- time(X,_,Y).
+qnt_titulos(X,Y) :- time(X,Y,_).
+heptacampeao(X) :- time(X,Y,_),Y=:=7.
+mais_velho(X) :- time(X,_,Y),Y=<1902.
+mais_novo(X) :- time(X,_,Y),Y>=1921.
+/*?- fundacao(palmeiras, Ano). % Para obter o ano de fundação do Palmeiras.
+?- qnt_titulos(corinthians, Titulos). % Para obter a quantidade de títulos do Corinthians.
+?- heptacampeao(atl_mineiro). % Para verificar se o Atlético Mineiro é heptacampeão.
+?- mais_velho(fluminense). % Para verificar se o Fluminense é o mais velho.
+?- mais_novo(cruzeiro). % Para verificar se o Cruzeiro é o mais novo.*/
+
+
+
+
+------------------------Aula 4------------------------
+EX1.
+homem(joao).
+homem(claudio).
+homem(marcos).
+homem(jose).
+mulher(ana).
+mulher(bia).
+mulher(gabi).
+mulher(gih).
+pai(joao,claudio).
+pai(jose,joao).
+pai(joao,gabi).
+mae(ana,gih).
+mae(gih,gabi).
+mae(gih,claudio).
+
+feliz(X) :- pai(X,_);mae(X,_).
+casal(X,Y) :- pai(X,Z),mae(Y,Z).
+
+
+Ex 2.
+aprovado(Nota,Materia):- (Nota>=60),write(Materia),nl.
+reprovado(Nota,Materia):- (Nota<60),write(Materia),nl.
+media(Nota1,Nota2,Nota3,Nota4,Nota5):-S is ((Nota1+Nota2+Nota3+Nota4+Nota5)/5),write(S).
+notas:- write('Insira seu nome: '),read(Nome),nl,write('Insira o nome e a nota de 5 materias').
+       (read(M1),read(N1),read(M2),read(N2),read(M3),read(N3),read(M4),read(N4),read(M5),read(N5)),
+       write(Nome),nl,
+       ((aprovado(N1,M1);reprovado(N1,M1)),(aprovado(N2,M2);reprovado(N2,M2)),(aprovado(N3,M3);reprovado(N3,M3)),(aprovado(N4,M4);reprovado(N4,M4)),(aprovado(N5,M5);reprovado(N5,M5))),
+       (media(N1,N2,N3,N4,N5)).
+
+
+Ex 3.
+aluno(joca, logica, 7.0).
+aluno(joao, logica, 6.5).
+aluno(jose, pp, 2.5).
+aluno(gil, prolog, 10.0).
+aluno(ana, pp, 10.0).
+aluno(bia, prolog, 8.5).
+aluno(cleber, logica, 10.0).
+aluno(juca, prolog, 3.0).
+aluno(cesar, logica, 3.5).
+aluno(lucas,prolog, 7.5).
+aluno(caua, pp, 8.5).
+aluno(breno, logica, 1.0).
+aluno(gabi, logica, 6.0).
+aluno(enzo, pp, 7.0).
+aluno(valeria, prolog, 4.0).
+aluno(diego, logica, 8.5).
+aluno(duda, pp, 9.5).
+aluno(dudu, pp, 5.0).
+aluno(rafael, logica, 3.5).
+aluno(aldo, prolog, 4.0).
+aluno(artur, logica, 4.0).
+professor(patricia, logica, 2).
+professor(augusto, pf, 1).
+professor(leonardo, pp, 3).
+
+nota(NomeAluno,Disciplina,Valor):- aluno(NomeAluno,Disciplina,Z),professor(_,Disciplina,P), Valor is (Z*P)/5.
+maiorNota(Disciplina,NomeAluno):- aluno(NomeAluno,Disciplina,Z), Z=:=10.0.
+menorNota(Disciplina,NomeAluno):- aluno(NomeAluno,Disciplina,Z), Z=<3.0.
+mairNota(NomeAluno):- aluno(NomeAluno,_,Z), Z=:=10.
+
+
+Ex 4.
+:- dynamic governou/3
+governou(joao, 1952, 1968).
+governou(jose, 1968, 1970).
+governou(maria, 1970, 1974).
+governou(joana, 1974, 1982).
+governou(mario, 1982, 1988).
+governou(rodrigo, 1988, 1994).
+governou(ana, 1994, 1995).
+governou(lucio, 1995, 2005).
+governou(fernanda, 2005, 2010).
+
+presidente(X,Y):- governou(X,W,Z),Y>=W,Y=<Z.
+
+
+Ex 5.
+populacao(paisA, 203).
+populacao(paisB, 548).
+populacao(paisC, 800).
+populacao(paisD, 108).
+populacao(paisE, 392).
+populacao(paisF, 290).
+populacao(paisG, 111).
+area(paisA, 8).
+area(paisB, 3).
+area(paisC, 10).
+area(paisD, 8).
+area(paisE, 5).
+area(paisF, 3).
+area(paisG, 4).
+
+densidade(X,Y):- populacao(X,Z),area(X,W),Y is (Z/W).
+
+
+Ex 6.
+sucessor(X,Y):- numero(X),numero(Y),X =:= (Y+1).
+par(X):- numero(X), X>0, X mod 2.
+triplo(X,Y):- numero(X),numero(Y), X =:= (Y^3).
+entre(X,A,B):- numero(A),numero(X),numero(B), A >= X; X =< B.
+
+
+
+
+------------------------Aula 5------------------------
+EX 1.
+%a)
+estrada(1,a,b).
+estrada(2,a,d).
+estrada(3,b,c).
+estrada(4,c,d).
+estrada(5,b,e).
+estrada(6,c,f).
+estrada(7,d,f).
+estrada(8,e,f).
+
+%b)
+rota(A,B,R):- estrada(R,A,B).
+%c)
+rotac(R,A):- estrada(R,_,A).
+%d)
+rotas(R,A):- estrada(R,A,_).
+
+
+Ex 2.
+livro(nome('Operating System Concepts'), autor('Abraham'), pal_chave([sistemas, so, processos])).
+livro(nome('Database System Concepts'), autor('Abraham'), pal_chave([banco, sql, modelagem])).
+livro(nome('Computer Networking'), autor('James'), pal_chave([redes, internet, tcp_ip])).
+livro(nome('Programming Language Pragmatics'), autor('Michael'), pal_chave([linguagens, compiladores, interpretadores])).
+livro(nome('C completo e total'), autor('Schildt'), pal_chave([linguagemc, programacao, computacao])).
+livro(nome('Introduction to Algorithms'), autor('Cormen'), pal_chave([algoritmos,estruturas,algoritimos])).
+livro(nome('Estruturas de Dados e Algoritmos em Java'), autor('Lafore'), pal_chave([java,estruturasdedados, algoritmos])).
+livro(nome('Python Fluente'), autor('Luciano'), pal_chave([python, programacao,computacao])).
+livro(nome('Introduction to the Theory of Computation'), autor('Sipser'),pal_chave([teoriadacomputacao, matematica, computacao])).
+livro(nome('Artificial Intelligence: A Modern Approach'), autor('Stuart'),pal_chave([inteligenciaartificial, ia, computacao])).
+
+autor_do_livro(Nome, Autor) :- livro(nome(Nome), autor(Autor), _).
+livros_do_autor(Autor, NomeLivro) :- livro(nome(NomeLivro), autor(Autor), _).
+palavras_chave_do_livro(NomeLivro, PalavrasChave) :- livro(nome(NomeLivro), _, pal_chave(PalavrasChave)).
+livro_por_palavra_chave(PalavraChave, NomeLivro, Autor) :- livro(nome(NomeLivro), autor(Autor), pal_chave(PalavrasChave)), member(PalavraChave, PalavrasChave).
+livros_por_palavras_chave(PalavrasChave, NomeLivro, Autor) :- livro(nome(NomeLivro), autor(Autor), pal_chave(PalavrasChaveLivro)),member(PalavraChave, PalavrasChave),member(PalavraChave, PalavrasChaveLivro).
+
+Ex 3.
+d(0,zero).
+d(1,um).
+d(2,dois).
+d(3,tres).
+d(4,quatro).
+d(5,cinco).
+d(6,seis).
+d(7,sete).
+d(8,oito).
+d(9,nove).
+
+txt([], []).
+txt([D|A], [P|B]) :- d(D, P), txt(A, B).
+
+Ex 4.
+dono(jose, carro(onix, azul, passeio)).
+dono(joao, carro(argo, amarelo, passeio)).
+dono(lucas, carro(gol, preto, passeio)).
+dono(ana, carro(compass, ciano, passeio)).
+dono(maria, carro(hb20, branco, passeio)).
+dono(julia, carro(transit, branco, transporte)).
+dono(caio, carro(gol, vermelho, passeio)).
+dono(pedro, carro(compass, fosco, passeio)).
+dono(bruno, carro(carreraGTS, verde, esportivo)).
+dono(ale, carro(strada, preto, carga)).
+
+proprietario(X,Y):- dono(X,Y).
+dono_de_que(X):- dono(X,Y), write(Y).
+cor(X):- dono(Y,carro( _,X,_)), write(Y).
+possuidor(X):- dono(X,_).
+cores_especificas(X):- dono(_,carro(_,Y,X)),write(Y).
+
+
+
+
+------------------------Aula 6------------------------
+Ex 1.
+funcionario(1,ana,12000,fabio,financeiro,empa).
+funcionario(2,bia,5000,jose,financeiro,empb).
+funcionario(3,ivo,6000,gustavo,pessoal,empc).
+funcionario(4,joao,4000,mariana,vendas,empa).
+funcionario(5,paulo,8000,jessica,vendas,empb).
+funcionario(6,rodrigo,10000,antonio,vendas,empc).
+funcionario(7,maria,9000,lucas,compras,empa).
+empresa(empa,fernanda,brasil).
+empresa(empb,matias,brasil).
+empresa(empc,sandro,holanda).
+
+dependente(X):- funcionario(_,X,_,Y,_,_), write(Y).
+codigos_brasil(_):- empresa(Z,_,brasil),funcionario(Y,_,_,_,_,Z),write(Y).
+departamentos_holanda(_):- empresa(empc,_,holanda),funcionario(_,_,_,_,X,empc),write(X).
+dependentes_brasil(_):- empresa(Y,_,brasil),funcionario(_,_,_,X,_,Y),write(X), nl.
+chefiados_por(X):- empresa(Empresa,X,_),funcionario(_,Y,_,_,_,Empresa), write(Y), nl.
+func_emp(X):- empresa(X,_,_),funcionario(_,Y,_,_,_,X), write(Y),nl.
+ganham_entre(X,Y):- funcionario(_,Nome,Z,_,_,_), Z>=X , Z=<Y, write(Nome),nl.
+
+
+
+Ex 2.
+filme('Uma linda mulher', romance, 1990, 119). ​
+filme('Sexto sentido', suspense, 2001, 108). ​
+filme('A cor púrpura', drama, 1985, 152). ​
+filme('Copacabana', comédia, 2001, 92). ​
+filme('E o vento levou', drama, 1939, 233). ​
+filme('Carrington', romance, 1995, 130). 
+
+genero_apos_ano(X,Y):- filme(Filme,X,Data,_),Data>=Y,write(Filme),nl.
+duração_entre(X,Y):- filme(Filme,_,_,Dura), Dura>=X, Dura=<Y,write(Filme),nl.
+genero(X):- filme(Y,X,_,_),write(Y),nl.
+locadora(_):- filme(X,_,_,_),write(X),nl.
+
+
+Ex 3.
+governou(joao, 1952, 1968).​
+governou(jose, 1968, 1970).​
+governou(maria, 1970, 1974).​
+governou(joana, 1974, 1982).​
+governou(mario, 1982, 1988).​
+governou(rodrigo, 1988, 1994).​
+governou(ana, 1994, 1995).​
+governou(lucio, 1995, 2005).​
+governou(fernanda, 2005, 2010).
+
+presidente(X,Y):- governou(X,W,Z),Y>=W,Y=<Z.
+
+
+Ex 4.
+populacao(paisA, 203).​
+populacao(paisB, 548).​
+populacao(paisC, 800).​
+populacao(paisD, 108).​
+populacao(paisE, 392).​
+populacao(paisF, 290).​
+populacao(paisG, 111).​
+area(paisA, 8).​
+area(paisB, 3).​
+area(paisC, 10).​
+area(paisD, 8).
+area(paisE, 5).​
+area(paisF, 3).​
+area(paisG, 4).​
+
+densidade(X,Y):- populacao(X,Z),area(X,W),Y is (Z/W).
+
+
+Ex 5.
+sucessor(X,Y):- X =:= (Y+1).
+
+
+Ex 6.
+par(X):- X>0, X mod 2 =:= 0.
+
+
+Ex 7.
+triplo(X,Y):- X =:= (Y^3).
+
+
+Ex 8.
+entre(X,A,B):- A >= X; X =< B.
+
+
+
+
+------------------------Aula 7------------------------
+Ex 1.
+fatorial(0,1).
+fatorial(X,Y):- X>0, X1 is X-1, fatorial(X1,Y1),
+                Y is X*Y1.
+
+Ex 2.
+caminho(a,b,5).
+caminho(a,f,5).
+caminho(a,c,10).
+caminho(a,g,75).
+caminho(b,e,25).
+caminho(b,f,25).
+caminho(c,d,10).
+caminho(d,e,5).
+caminho(e,f,5).
+caminho(g,f,20).
+custo(X,Y,Custo):- caminho(X,Y,Custo).
+custo(X,Y,Custo):- caminho(X,Z,Custo1), custo(Z,Y,Custo2),
+                   (Custo is (Custo1 + Custo2)). 
+
+Ex 3.
+mdc(X,0,X).
+mdc(X,Y,Z):- Resultado is X mod Y, mdc(Y,Resultado,Z).
+
+Ex 4.
+soma(1,1):-!.
+soma(N,Soma):- N>=2, Sub is N-1, soma(Sub,Soma2), 
+               Soma is Soma2 + N.
+
+Ex 5.
+pot(_,0,1):-!.
+pot(Base,Expoente,Potencia):- NovoExpo is (Expoente-1), 
+                              pot(Base,NovoExpo,Potencia1),
+                              Potencia is Potencia1*Base.
+
+Ex 6.
+deCarro(uberlandia,monteCarmelo).
+deCarro(unai,brasilia).
+deCarro(goiania,itumbiara).
+deCarro(goiania,ituiutaba).
+deTrem(ituiutaba,araguari).
+deTrem(itumbiara,araguari).
+deTrem(ituiutaba,monteAlegre).
+deTrem(monteCarmelo,monteAlegre).
+deAviao(saoPaulo,recife).
+deAviao(saoPaulo,rioJaneiro).
+deAviao(monteAlegre,bh).
+deAviao(recife,maceio).
+deAviao(bh,uberlandia).
+
+viagem(CidadeA,CidadeB):- (deCarro(CidadeA,CidadeB);deTrem(CidadeA,CidadeB);deAviao(CidadeA,CidadeB)),!.
+viagem(CidadeA,CidadeB):- (deCarro(CidadeA,CidadeC);deTrem(CidadeA,CidadeC);deAviao(CidadeA,CidadeC)),
+                          viagem(CidadeC,CidadeB).
+
+
+
+
+------------------------Aula 8------------------------
+quadrado:- repeat,
+    	   write("Digite a base: "),nl,
+           read(Base),nl,
+           ((Base== pare->!);
+            (Multp is Base*Base,
+            write(Multp),nl,fail)).
+
+imprimeAte(0):- X is 0, write(X), write(' '),!.
+imprimeAte(X):- Imprime is X-1,
+                imprimeAte(Imprime),
+    		    write(X),
+    			write(' ').
+
+
+
+
+------------------------Aula 9------------------------
+Ex 1.
+ultimo([X]):- write(X),!.
+ultimo([_|Y]):- ultimo(Y).
+
+
+Ex 2.
+tam([],0):-!.
+tam([_|Y],N):- tam(Y,N1), N is 1 + N1.
+
+
+Ex 3.
+soma([X],X):- !.
+soma([X|Y],S):- soma(Y,S1), S is X+S1. 
+
+
+Ex 4.
+max([X],X):- !.
+max([X|Y],M):- max(Y,M1),((M1 > X, M is M1, !);(M is X, !)).
+
+
+Ex 5.
+retornaElemento(1,X,[X|_]):- !.
+retornaElemento(N,Elem,[_|Y]):- N1 is N-1, retornaElemento(N1,Elem,Y).
+
+
+Ex 6.
+retiraElemento(_, [], []) :- !.
+retiraElemento(X,[X|Y],L2):- retiraElemento(X,Y, L2), !.
+retiraElemento(Elem,[X|Y],[X|L2]):- retiraElemento(Elem,Y,L2), !.
+
+
+Ex 7.
+copia([], []).
+copia([X | Y], [X|L2]) :- copia(Y, L2).
+
+insereElem(Elem, L1, [Elem |L2]) :- copia(L1, L2).
+
+
+
+
+------------------------Aula 10------------------------
+see(novoArqEnt):- ver arquivo de entrada
+tell(novoArqSai):- tipo write
+arquivo
+Ex 1.
+ler_arquivo:- repeat,
+	      read(Item),
+	      ((Item == end_of_file -> !;
+	      write(Item),nl,fail)).
+
+arquivoLer:- open(arquivo, read, Item),
+		  current_input(Entrada),
+		  set_input(Item),
+		  ler_arquivo(),
+		  set_input(Entrada), 
+		  close(Item).
+
+- função abre o arquivo, muda a entrada e chama outra e depois fecha o arquivo
+- a outra lê até EOF
+
+Ex 2.
+verifica:- repeat, 
+           write("Digite oq deseja: "),
+	   read(Termo),	
+	   ((Termo=='fim' -> !;read(Termo),nl,fail)).
+		 
+arquivoEscreve:- open(arquivo,write,Item),
+		 current_output(Saida),
+		 set_output(Item), 
+		 write("Digite oq deseja: "),
+		 verifica(),
+		 set_output(Saida),
+		 close(Item).
+
+Ex 3.
+fun:- repeat,
+      get(X),name(K,[X]),
+      ((X=='f'->!,write(K),nl,fail)).
+aquivoLerc:- open(arquivo,write,X),
+ 	     current_output(Entrada),
+	     set_output(X),
+	     fun(),
+	     set_output(Entrada),
+	     close(X).
+
+Ex 4
+arquivoEscrevec:- open(arquivo,read,X),
+		  set_input(X),
+		  get(Num),
+		  name(Car,[Num]),
+		  set_input(user),
+		  write(Car),
+		  close(X).
